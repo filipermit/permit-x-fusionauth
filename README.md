@@ -91,3 +91,4 @@ If you want to use this example app as a jumping-off point for your own FusionAu
 ## Contributing
 
 TODO
+# permit-x-fusionauth

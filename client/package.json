@@ -16,14 +16,25 @@
   "author": "Matt Boisseau <matt@fusionauth.io>",
   "license": "ISC",
   "dependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "@emotion/react": "^11.10.4",
+    "@mantine/core": "^5.3.3",
+    "@mantine/hooks": "^5.3.3",
+    "@tabler/icons": "^1.96.0",
+    "permitio": "^0.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.0",
+    "url-loader": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",
-    "babel-loader": "^8.0.6",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^3.4.2",
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^1.1.3",

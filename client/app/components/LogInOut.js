@@ -1,21 +1,17 @@
-import React from 'react';
+import React from "react";
+import { Button } from "@mantine/core";
 
-export default class LogInOut extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+export default function LogInOut({ uri, body }) {
+	let message = body.token ? "Sign Out" : "Sign In";
+	let path = body.token ? "/logout" : "/login";
 
-  render() {
-    let message = (this.props.body.token)
-      ? 'sign out'
-      : 'sign in';
-
-    let path = (this.props.body.token)
-      ? '/logout'
-      : '/login';
-
-    return (
-      <a href={this.props.uri + path}>{message}</a>
-    );
-  }
+	return (
+		<Button
+			color="green"
+			onClick={() => (window.location.href = uri + path)}
+			style={{ width: "280px" }}
+		>
+			{message}
+		</Button>
+	);
 }

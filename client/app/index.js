@@ -1,78 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
+import React, { useState, useEffect, createContext } from "react";
+import { createRoot } from "react-dom/client";
+import { MantineProvider } from "@mantine/core";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Greeting from './components/Greeting.js';
-import LogInOut from './components/LogInOut.js';
-import Response from './components/Response.js';
-import UserData from './components/UserData.js';
+import "./index.css";
+import Home from "./components/Home";
+import RestrictedPage from "./components/RestrictedPage";
 
-const config = require('../../config');
+const config = require("../../config");
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      body: {} // this is the body from /user
-    };
-    this.handleTextInput = this.handleTextInput.bind(this);
-  }
+export const UserContext = createContext();
 
-  componentDidMount() {
-    fetch(`http://localhost:${config.serverPort}/user`, {
-      credentials: 'include' // fetch won't send cookies unless you set credentials
-    })
-      .then(response => response.json())
-      .then(response => this.setState(
-        {
-          body: response
-        })
-      );
-  }
+function App() {
+	const [body, setBody] = useState({});
 
-  handleTextInput(event) {
-    // update this.state.body.registration.data.userData
-    let body = this.state.body;
-    body.registration.data = {userData: event.target.value};
-    this.setState(
-      {
-        body: body
-      });
+	useEffect(() => {
+		fetch(`http://localhost:${config.serverPort}/user`, {
+			credentials: "include", // fetch won't send cookies unless you set credentials
+		})
+			.then((response) => response.json())
+			.then((response) => {
+				setBody(response);
+				console.log(response);
+			});
+	}, []);
 
-    // save the change in FusionAuth
-    fetch(`http://localhost:${config.serverPort}/set-user-data`,
-          {
-            credentials: 'include',
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-              {
-                userData: event.target.value
-              })
-          });
-  }
+	if (body !== {}) {
+		console.log(body);
+	}
 
-  render() {
-    return (
-      <div id='App'>
-        <header>
-          <h1>FusionAuth Example: React</h1>
-          <Greeting body={this.state.body}/>
-          <LogInOut body={this.state.body} uri={`http://localhost:${config.serverPort}`}/>
-        </header>
-        <main>
-          <UserData body={this.state.body} handleTextInput={this.handleTextInput}/>
-          <Response body={this.state.body}/>
-        </main>
-        <footer>
-          <a href='https://fusionauth.io/docs/v1/tech/tutorials/'>Learn how this app works.</a>
-          <a href='https://twitter.com/fusionauth'>Tweet your questions at us.</a>
-        </footer>
-      </div>
-    );
-  }
+	return (
+		<UserContext.Provider value={body}>
+			<MantineProvider withGlobalStyles withNormalizeCSS>
+				<BrowserRouter>
+					<Routes>
+						<Route index element={<Home body={body} />} />
+						<Route path="restricted" element={<RestrictedPage body={body} />} />
+					</Routes>
+				</BrowserRouter>
+			</MantineProvider>
+		</UserContext.Provider>
+	);
 }
 
-ReactDOM.render(<App/>, document.querySelector('#Container'));
+createRoot(document.getElementById("Container")).render(<App />);
