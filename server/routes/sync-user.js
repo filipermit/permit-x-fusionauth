@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 		},
 	];
 
-	// Assign roles based on email address (if part of Permit or Supertokens).
+	// Assign roles based on email address (if part of Permit or FusionAuth).
 	if (/@fusionauth.io\s*$/.test(email) || /@permit.io\s*$/.test(email)) {
 		roles = [
 			{
@@ -39,6 +39,7 @@ router.post("/", async (req, res) => {
 		})
 	);
 
+	// For the webhook to work.
 	res.status(200).send("OK");
 });
 

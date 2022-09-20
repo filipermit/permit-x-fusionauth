@@ -34,7 +34,6 @@ app.use("/user", require("./routes/user"));
 app.use("/login", require("./routes/login"));
 app.use("/oauth-callback", require("./routes/oauth-callback"));
 app.use("/logout", require("./routes/logout"));
-app.use("/set-user-data", require("./routes/set-user-data"));
 app.use("/sync-user", require("./routes/sync-user"));
 app.use("/permit", require("./routes/permit"));
 app.use("/getGPG", require("./routes/getGPG"));
